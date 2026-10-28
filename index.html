@@ -21,7 +21,7 @@
   img{max-width:100%}
   [hidden]{display:none!important}
   body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:960px;margin:0 auto;padding:clamp(28px,6vw,64px) max(18px,env(safe-area-inset-left,0px))}
+  .wrap{max-width:720px;margin:0 auto;padding:clamp(28px,6vw,64px) clamp(20px,5vw,40px)}
   h1,h2,h3{font-family:var(--font-display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
   .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--deep);font-weight:700;margin:0 0 .8rem}
   button,input{font-family:inherit}
@@ -30,11 +30,11 @@
   .btn.ghost{background:transparent;color:var(--deep);border:1.5px solid var(--deep);box-shadow:none}
   .btn:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
 
-  .intro{text-align:center;max-width:620px;margin-inline:auto}
+  .intro{text-align:center}
   .intro h1{font-size:clamp(2rem,7vw,3rem);line-height:1.04;margin-bottom:.6rem}
-  .intro p{color:var(--muted);font-size:1.08rem;margin:0 auto 1.6rem;max-width:40ch}
+  .intro p{color:var(--muted);font-size:1.08rem;margin:0 auto 1.6rem;max-width:60ch}
   .intro .meta{font-size:.85rem;color:var(--muted);margin-top:1.1rem}
-  #quiz{max-width:600px;margin-inline:auto;width:100%}
+  #quiz{width:100%}
 
   .top{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
   .bar{flex:1;height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
@@ -50,9 +50,9 @@
 
   .res .eyebrow{color:var(--accent);text-align:center}
   .res h2{font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.05;margin-bottom:.3rem;text-align:center}
-  .res .tell{font-size:1.02rem;font-style:italic;color:var(--muted);margin:.2rem auto 1.1rem;text-align:center;max-width:46ch}
-  .fearlead{font-size:1.12rem;font-weight:600;margin:.2rem auto .4rem;text-align:center;max-width:48ch}
-  .fearnote{color:var(--muted);margin:0 auto 1.4rem;text-align:center;max-width:52ch}
+  .res .tell{font-size:1.02rem;font-style:italic;color:var(--muted);margin:.2rem auto 1.1rem;text-align:center;max-width:60ch}
+  .fearlead{font-size:1.12rem;font-weight:600;margin:.2rem auto .4rem;text-align:center;max-width:62ch}
+  .fearnote{color:var(--muted);margin:0 auto 1.4rem;text-align:center;max-width:64ch}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.3rem;box-shadow:var(--shadow);margin-bottom:1.1rem}
   .card>h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--deep);margin-bottom:.5rem}
   .card>p{margin:0;color:var(--fg)}
@@ -88,11 +88,6 @@
   .done .note{font-size:.82rem;color:var(--muted);margin-top:.3rem}
   .restart{display:block;margin:1rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
   .res-grid{display:block}
-  @media (min-width:820px){
-    .res-grid{columns:2;column-gap:1.2rem}
-    .res-grid > *{break-inside:avoid}
-    .optin,.done{margin-top:0}
-  }
 </style>
 </head>
 <body>
