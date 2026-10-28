@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Qué miedo te frena?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700&display=swap">
+<style>
+  :root{
+    --bg:#FBF0E2; --surface:#FFFFFF; --surface-2:#FFEDDC;
+    --fg:#162628; --muted:#456066; --line:#E4D5C1;
+    --deep:#1F3B41; --accent:#CB713F; --accent-soft:#FBE1C9;
+    --below:#B4552B;
+    --shadow:0 1px 2px rgba(22,38,40,.06), 0 10px 30px rgba(22,38,40,.07);
+    --font-display:"Libre Baskerville", Georgia, serif;
+    --font-body:"Open Sans", -apple-system, system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0D1B1F; --surface:#162628; --surface-2:#1F3B41;
+    --fg:#F2E7D8; --muted:#B1CAD1; --line:#2B4349;
+    --deep:#7FB4BC; --accent:#D47E45; --accent-soft:#2C170D; --below:#E0905A;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }}
+  *{box-sizing:border-box}
+  html,body{min-height:100%;margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:620px;margin:0 auto;padding:clamp(28px,6vw,64px) max(18px,env(safe-area-inset-left,0px));min-height:100%;display:flex;flex-direction:column;justify-content:center}
+  h1,h2,h3{font-family:var(--font-display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
+  .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--deep);font-weight:700;margin:0 0 .8rem}
+  button,input{font-family:inherit}
+  .btn{display:inline-block;text-align:center;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:.9rem 1.6rem;font-size:1rem;font-weight:700;box-shadow:var(--shadow);cursor:pointer;text-decoration:none;transition:transform .12s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--deep);border:1.5px solid var(--deep);box-shadow:none}
+  .btn:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
+
+  .intro h1{font-size:clamp(2rem,7vw,3rem);line-height:1.04;margin-bottom:.6rem}
+  .intro p{color:var(--muted);font-size:1.08rem;margin:0 0 1.6rem;max-width:40ch}
+  .intro .meta{font-size:.85rem;color:var(--muted);margin-top:1.1rem}
+
+  .top{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
+  .bar{flex:1;height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s ease}
+  .count{font-size:.8rem;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .q h2{font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.15;margin-bottom:1.3rem}
+  .opts{display:flex;flex-direction:column;gap:.6rem}
+  .opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:.95rem 1.1rem;font-size:1rem;color:var(--fg);cursor:pointer;transition:border-color .12s,transform .1s}
+  .opt:hover{border-color:var(--deep);transform:translateY(-1px)}
+  .opt:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
+  .back{margin-top:1.3rem;background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:0;cursor:pointer}
+  .back:disabled{opacity:.35;cursor:default}
+
+  .res .eyebrow{color:var(--accent)}
+  .res h2{font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.05;margin-bottom:.3rem}
+  .res .tell{font-size:1.02rem;font-style:italic;color:var(--muted);margin:.2rem 0 1.1rem}
+  .fearlead{font-size:1.12rem;font-weight:600;margin:.2rem 0 .4rem}
+  .fearnote{color:var(--muted);margin:0 0 1.4rem}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.3rem;box-shadow:var(--shadow);margin-bottom:1.1rem}
+  .card>h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--deep);margin-bottom:.5rem}
+  .card>p{margin:0;color:var(--fg)}
+  .undermap{margin:1.1rem 0 0!important;color:var(--muted);font-size:.93rem}
+  .mapwrap{display:flex;gap:1.1rem;align-items:stretch}
+  .scale{position:relative;width:60px;flex:none;border-radius:12px;overflow:hidden;background:linear-gradient(to top,#CB713F 0%,#EDAA56 34%,#598993 62%,#B1CAD1 100%);min-height:250px}
+  .line200{position:absolute;left:0;right:0;border-top:2px dashed rgba(255,255,255,.9)}
+  .mk{position:absolute;left:50%;transform:translate(-50%,50%);width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--fg);box-shadow:0 0 0 3px rgba(0,0,0,.15)}
+  .maplabels{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;font-size:.82rem}
+  .ml{display:flex;flex-direction:column;gap:.1rem}
+  .ml b{font-family:var(--font-display);font-size:.95rem}
+  .ml span{color:var(--muted)}
+  .ml.you b{color:var(--below)}
+  .ml.goal b{color:var(--deep)}
+  .classcard{border-color:var(--deep);border-width:1.5px}
+  .cl-title{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--fg);margin:.1rem 0 .5rem!important}
+  .classcard .lead{margin:0 0 .4rem!important;color:var(--fg)}
+  .cl-list{list-style:none;margin:.7rem 0 0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+  .cl-list li{font-size:.95rem;color:var(--fg)}
+  .cl-list li b{color:var(--deep)}
+
+  /* opt-in */
+  .optin{background:var(--accent-soft);border-radius:16px;padding:1.4rem;margin:1.3rem 0 1rem;text-align:center}
+  .optin h3{font-size:1.4rem;margin-bottom:.3rem}
+  .optin p{margin:0 0 1rem;color:var(--fg)}
+  .optin input{width:100%;max-width:340px;padding:.85rem 1rem;border:1.5px solid var(--line);border-radius:12px;font-size:1rem;background:var(--surface);color:var(--fg);margin-bottom:.7rem}
+  .optin input:focus-visible{outline:3px solid var(--deep);outline-offset:1px}
+  .err{color:var(--below);font-size:.85rem;font-weight:600;margin:.4rem 0 0!important}
+  .done{background:var(--accent-soft);border-radius:16px;padding:1.5rem;margin:1.3rem 0 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+  .done h3{font-size:1.4rem}
+  .done p{margin:0;color:var(--fg)}
+  .done .btn{width:100%;max-width:340px}
+  .done .note{font-size:.82rem;color:var(--muted);margin-top:.3rem}
+  .restart{display:block;margin:.6rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro" class="intro">
+    <p class="eyebrow">Del miedo a la valentía · test</p>
+    <h1>¿Qué miedo te está frenando?</h1>
+    <p>La mayoría no cree que tenga miedo. Lo llama falta de tiempo, de disciplina, de claridad. En 6 preguntas descubres cuál cara del miedo te está bajando la energía — y qué hacer con ella.</p>
+    <button class="btn" id="start">Empezar</button>
+    <p class="meta">Tarda 1 minuto. Sé honesto, nadie te está viendo.</p>
+  </section>
+
+  <section id="quiz" hidden>
+    <div class="top">
+      <div class="bar"><i id="fill"></i></div>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="q">
+      <h2 id="qtext"></h2>
+      <div class="opts" id="opts"></div>
+      <button class="back" id="back">← Atrás</button>
+    </div>
+  </section>
+
+  <section id="result" hidden class="res">
+    <p class="eyebrow">Tu resultado</p>
+    <h2 id="rname"></h2>
+    <p class="tell" id="rtell"></p>
+    <p class="fearlead" id="rfear"></p>
+    <p class="fearnote">Casi nadie lo llama miedo. Pero eso es — y es completamente normal. Lo importante: el miedo se trabaja, y soltarlo es lo que te devuelve la energía para lograr lo que quieres. No es cuestión de esforzarte más.</p>
+
+    <div class="card">
+      <h3>Cómo te drena la energía</h3>
+      <p id="rdrain"></p>
+    </div>
+
+    <div class="card">
+      <h3>Tu energía hoy</h3>
+      <div class="mapwrap">
+        <div class="scale" id="scale">
+          <div class="line200" id="l200"></div>
+          <div class="mk" id="mkyou"></div>
+        </div>
+        <div class="maplabels">
+          <div class="ml goal"><b>Amor · 500</b><span>crear desde la plenitud</span></div>
+          <div class="ml goal"><b>Valentía · 200</b><span>el salto: dar el paso con el miedo al lado</span></div>
+          <div class="ml you"><b id="rfreqname"></b><span id="rfreqnote"></span></div>
+        </div>
+      </div>
+      <p class="undermap">Esta es tu frecuencia ahora. Desde aquí, por más que te esfuerces, avanzar cuesta: el esfuerzo tiene límite y el miedo te mantiene abajo. Lo que te sube no es más esfuerzo, es más energía. Y para subirla, primero hay que cruzar el miedo.</p>
+    </div>
+
+    <div class="card classcard">
+      <h3>Lo que sigue</h3>
+      <p class="cl-title">Del miedo a la valentía</p>
+      <p class="lead">3 días en vivo y gratis (1, 2 y 3 de diciembre) para subir tu frecuencia y dar el primer salto del mapa: cruzar del miedo a la valentía.</p>
+      <ul class="cl-list">
+        <li><b>Por qué para ti:</b> tu energía hoy está debajo de 200, donde el esfuerzo no alcanza. Aquí aprendes a subirla.</li>
+        <li><b>Qué te llevas:</b> ver tu miedo de frente, soltarlo en vivo, y una herramienta para volver a tu energía cuando el miedo te gane.</li>
+        <li><b>Cómo funciona:</b> Día 1 mirarte · Día 2 sentir y soltar · Día 3 transformar.</li>
+      </ul>
+    </div>
+
+    <form id="optin" class="optin">
+      <h3>Guarda tu lugar</h3>
+      <p>Déjame tu correo y aseguras tu cupo. Es gratis.</p>
+      <input type="email" id="email" required autocomplete="email" placeholder="tu@correo.com">
+      <button class="btn" type="submit">Quiero estar</button>
+      <p class="err" id="err" hidden>Escribe un correo válido.</p>
+    </form>
+
+    <div id="done" class="done" hidden>
+      <h3>¡Listo! Nos vemos del 1 al 3 de diciembre 🌞</h3>
+      <p>Dos pasos para no perdértelo:</p>
+      <a class="btn" id="waBtn" target="_blank" rel="noopener">Entrar al grupo de WhatsApp</a>
+      <a class="btn ghost" id="calBtn" target="_blank" rel="noopener">Guardar en mi calendario</a>
+      <p class="note">El link de la clase se comparte en el grupo de WhatsApp.</p>
+    </div>
+
+    <button class="restart" id="restart">Volver a empezar</button>
+  </section>
+
+</div>
+
+<script>
+  /* ========= CONFIG — llena estos 2 valores ========= */
+  const CONFIG = {
+    WEBHOOK_URL: "https://hook.us2.make.com/exucx3n9ioyk1nmvdgz8dy31ssl3oxin",  // Make webhook
+    WHATSAPP_URL: "https://chat.whatsapp.com/F3axjbSggOM6Ya1mIXFhVU",  // grupo "Del miedo a la valentía"
+    CALENDAR_URL: "https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=Xzg1MzM0ZGE0OGNzajRiOWw2c3NrYWI5azhvcGppYjlwODUxNGFiOWc4NHNqOGQxaThkMjMwY2k2NmdfMjAyNjEyMDJUMDAwMDAwWiBjXzFiYmE4YTNhYWVjYjE4MTFhZTVlMTMyM2Q4NDc5NzU3MzI5MmQ4YzY4ZGI2NjAzNzA2NDZlMTMyOTY1NDhmYTVAZw&tmsrc=c_1bba8a3aaecb1811ae5e1323d84797573292d8c68db660370646e13296548fa5%40group.calendar.google.com&scp=ALL"
+  };
+  /* ================================================== */
+
+  const TYPES = {
+    exigente: { name:"El Exigente", tell:"“Nunca está suficientemente bien. Lo lograste… pero pudiste hacerlo mejor.”", fear:"Debajo de tu exigencia hay un miedo viejo: el de no ser suficiente.", drain:"Te mides por el resultado, y cada logro sube la vara. La meta se aleja justo cuando la tocas. Es agotador y nunca alcanza.", freq:175, freqName:"Orgullo · 175", freqNote:"un poder frágil que depende de que todo salga perfecto" },
+    afanado: { name:"El Afanado", tell:"“Ya, ya, rápido. La próxima meta sí me va a llenar.”", fear:"Debajo del afán hay un miedo a quedarte quieto y sentir el vacío.", drain:"Vives en la prisa: la mente no para, el cuerpo tampoco. Logras cosas pero nunca llegas, porque el afán siempre pide la siguiente.", freq:125, freqName:"Deseo · 125", freqNote:"correr sin llegar, siempre detrás de lo que sigue" },
+    paralizado: { name:"El Paralizado", tell:"“Cuando esté listo. Lo pienso un poco más.” Y el lunes… sigues igual.", fear:"Debajo de tu “cuando esté listo” hay un miedo a fallar.", drain:"Esperas tener certeza para arrancar, y la certeza no llega. Mientras tanto, la vida que quieres sigue en pausa.", freq:100, freqName:"Miedo · 100", freqNote:"la raíz: la certeza que esperas nunca llega sola" },
+    complaciente: { name:"El Complaciente", tell:"“¿Qué van a pensar? Mejor no incomodo.” Y dices que sí sin querer.", fear:"Debajo de complacer hay un miedo al rechazo.", drain:"Tu energía se va en no decepcionar a nadie, y tu verdad queda de última. Terminas con una vida que se ve bien por fuera y te queda lejos por dentro.", freq:45, freqName:"Culpa · 45", freqNote:"vivir para los ojos de otros te deja lejos de ti" },
+    controlador: { name:"El Controlador", tell:"“Si no lo hago yo, sale mal.” No sueltas, no confías.", fear:"Debajo del control hay un miedo a soltar y confiar.", drain:"Cargas todo porque soltar da miedo. Te vuelves el cuello de botella de tu propia vida, viviendo tenso a la espera de que algo falle.", freq:150, freqName:"Control · 150", freqNote:"cargarlo todo te tensa y te frena" }
+  };
+
+  const QUESTIONS = [
+    { q:"Tienes una idea que te emociona. ¿Qué pasa primero?", a:[
+      ["La pulo en mi cabeza hasta que esté perfecta","exigente"],
+      ["Quiero lanzarla YA, antes de perder el impulso","afanado"],
+      ["No sé ni por dónde empezar, así que lo dejo para después","paralizado"],
+      ["Pienso en qué van a decir los demás si la ven","complaciente"],
+      ["Planeo cómo controlar cada detalle para que no falle","controlador"] ]},
+    { q:"Es domingo en la noche. ¿Qué sientes?", a:[
+      ["Que pude haber hecho más, que no rindió como debía","exigente"],
+      ["Ansiedad por todo lo que viene esta semana","afanado"],
+      ["Que otra semana se fue y no arranqué lo que quería","paralizado"],
+      ["Pendiente de compromisos que acepté sin querer","complaciente"],
+      ["Repasando todo lo que tengo que tener bajo control","controlador"] ]},
+    { q:"Alguien te felicita por un logro. ¿Tu voz interna?", a:[
+      ["“Sí, pero pude hacerlo mejor”","exigente"],
+      ["“Gracias… ¿y ahora qué sigue?”","afanado"],
+      ["“Ojalá supieran lo que me costó decidirme”","paralizado"],
+      ["“Me encanta que lo noten”","complaciente"],
+      ["“Salió bien porque yo estuve encima de todo”","controlador"] ]},
+    { q:"Lo que más te frena de dar un paso grande es…", a:[
+      ["Que no quede perfecto","exigente"],
+      ["No tener tiempo, vivo corriendo","afanado"],
+      ["La sigo posponiendo sin querer","paralizado"],
+      ["Que me juzguen o decepcionar a alguien","complaciente"],
+      ["No saber si va a salir como quiero","controlador"] ]},
+    { q:"Cuando algo sale mal, por dentro te dices…", a:[
+      ["“Debí preverlo, fue mi culpa”","exigente"],
+      ["“No hay tiempo para esto, hay que resolver ya”","afanado"],
+      ["“Por eso mejor no me arriesgo”","paralizado"],
+      ["“¿Qué van a pensar de mí?”","complaciente"],
+      ["“Si lo hubiera hecho yo, no pasa”","controlador"] ]},
+    { q:"Descansar sin hacer nada se siente…", a:[
+      ["Como que estoy fallando o perdiendo el tiempo","exigente"],
+      ["Imposible, mi mente sigue corriendo","afanado"],
+      ["Bien… de hecho a veces me quedo ahí de más","paralizado"],
+      ["Culposo si alguien me necesita","complaciente"],
+      ["Incómodo, siento que algo se me va de las manos","controlador"] ]}
+  ];
+
+  const $ = id => document.getElementById(id);
+  let i = 0, answers = [], currentType = null;
+
+  $("start").onclick = () => { $("intro").hidden = true; $("quiz").hidden = false; render(); };
+  $("back").onclick = () => { if (i>0){ i--; answers.pop(); render(); } };
+  $("restart").onclick = () => { i=0; answers=[]; $("result").hidden=true; $("intro").hidden=false; $("optin").hidden=false; $("done").hidden=true; };
+
+  function render(){
+    const Q = QUESTIONS[i];
+    $("count").textContent = (i+1)+" / "+QUESTIONS.length;
+    $("fill").style.width = (i/QUESTIONS.length*100)+"%";
+    $("qtext").textContent = Q.q;
+    $("back").disabled = i===0;
+    const box = $("opts"); box.innerHTML = "";
+    Q.a.forEach(([text,type]) => {
+      const b = document.createElement("button");
+      b.className="opt"; b.type="button"; b.textContent=text;
+      b.onclick = () => { answers[i]=type; i++; (i<QUESTIONS.length)?render():showResult(); };
+      box.appendChild(b);
+    });
+  }
+
+  function showResult(){
+    $("fill").style.width="100%";
+    const tally={}; answers.forEach(t=>tally[t]=(tally[t]||0)+1);
+    let win=answers[0]; for(const t in tally){ if(tally[t]>(tally[win]||0)) win=t; }
+    currentType = win;
+    const r=TYPES[win];
+    $("quiz").hidden=true; $("result").hidden=false;
+    $("rname").textContent=r.name;
+    $("rtell").textContent=r.tell;
+    $("rfear").textContent=r.fear;
+    $("rdrain").textContent=r.drain;
+    $("rfreqname").textContent=r.freqName;
+    $("rfreqnote").textContent=r.freqNote;
+    const pct=v=>Math.max(4,Math.min(96,v/540*100));
+    $("l200").style.bottom=pct(200)+"%";
+    $("mkyou").style.bottom=pct(r.freq)+"%";
+    window.scrollTo(0,0);
+  }
+
+  function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+  $("optin").addEventListener("submit", e => {
+    e.preventDefault();
+    const email = $("email").value.trim();
+    if(!validEmail(email)){ $("err").hidden=false; return; }
+    $("err").hidden=true;
+    if(CONFIG.WEBHOOK_URL){
+      try{
+        const body = new URLSearchParams({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", origen:"test-del-miedo-a-la-valentia" });
+        fetch(CONFIG.WEBHOOK_URL, { method:"POST", mode:"no-cors", body });
+      }catch(err){}
+    }
+    $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
+    $("calBtn").href = CONFIG.CALENDAR_URL || "#";
+    $("optin").hidden=true; $("done").hidden=false;
+    $("done").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+</script>
+</body>
+</html>
