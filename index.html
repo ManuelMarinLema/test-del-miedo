@@ -181,7 +181,7 @@
   const CONFIG = {
     WEBHOOK_URL: "https://hook.us2.make.com/exucx3n9ioyk1nmvdgz8dy31ssl3oxin",  // Make webhook
     WHATSAPP_URL: "https://chat.whatsapp.com/F3axjbSggOM6Ya1mIXFhVU",  // grupo "Del miedo a la valentía"
-    CALENDAR_URL: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Del%20miedo%20a%20la%20valent%C3%ADa%20(D%C3%ADa%201%20de%203)&dates=20261201T190000/20261201T203000&ctz=America/Bogota&details=Mini%20curso%20en%20vivo%207%3A00-8%3A30pm.%20Los%203%20d%C3%ADas%3A%201%2C%202%20y%203%20de%20diciembre.%20El%20link%20de%20cada%20sesi%C3%B3n%20llega%20al%20grupo%20de%20WhatsApp.&location=https%3A%2F%2Fmeet.google.com%2Frva-wxth-yim"
+    CALENDAR_URL: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Del%20miedo%20a%20la%20valent%C3%ADa&dates=20261201T190000/20261201T203000&ctz=America/Bogota&recur=RRULE%3AFREQ%3DDAILY%3BCOUNT%3D3&details=Mini%20curso%20en%20vivo%207%3A00-8%3A30pm%20los%203%20d%C3%ADas%20(1%2C%202%20y%203%20de%20diciembre).%20El%20link%20de%20cada%20sesi%C3%B3n%20llega%20al%20grupo%20de%20WhatsApp.&location=https%3A%2F%2Fmeet.google.com%2Frva-wxth-yim"
   };
   /* ================================================== */
 
@@ -275,17 +275,28 @@
 
   function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
 
+  function sendToWebhook(data){
+    if(!CONFIG.WEBHOOK_URL) return;
+    try{
+      var iframe=document.createElement("iframe");
+      iframe.name="mk_sink"; iframe.style.display="none";
+      document.body.appendChild(iframe);
+      var form=document.createElement("form");
+      form.method="POST"; form.action=CONFIG.WEBHOOK_URL; form.target="mk_sink";
+      Object.keys(data).forEach(function(k){
+        var inp=document.createElement("input"); inp.type="hidden"; inp.name=k; inp.value=data[k]; form.appendChild(inp);
+      });
+      document.body.appendChild(form);
+      form.submit();
+    }catch(e){}
+  }
+
   $("optin").addEventListener("submit", e => {
     e.preventDefault();
     const email = $("email").value.trim();
     if(!validEmail(email)){ $("err").hidden=false; return; }
     $("err").hidden=true;
-    if(CONFIG.WEBHOOK_URL){
-      try{
-        const body = new URLSearchParams({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", origen:"test-del-miedo-a-la-valentia" });
-        fetch(CONFIG.WEBHOOK_URL, { method:"POST", mode:"no-cors", body });
-      }catch(err){}
-    }
+    sendToWebhook({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", origen:"test-del-miedo-a-la-valentia" });
     $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
     $("calBtn").href = CONFIG.CALENDAR_URL || "#";
     $("optin").hidden=true; $("done").hidden=false;
