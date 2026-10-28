@@ -10,7 +10,7 @@
     --bg:#0D1B1F; --surface:#16292D; --surface-2:#1F3B41;
     --fg:#F2E7D8; --muted:#B1CAD1; --line:#2B4349;
     --deep:#7FB4BC; --accent:#D47E45; --accent-soft:#2C1D12;
-    --below:#E0905A;
+    --below:#E0905A; --coffee:#6E4A2C; --coffee-field:#EADBC6;
     --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.45);
     --font-display:"Libre Baskerville", Georgia, serif;
     --font-body:"Open Sans", -apple-system, system-ui, sans-serif;
@@ -75,17 +75,18 @@
   .cl-list li b{color:var(--deep)}
 
   /* opt-in */
-  .optin{background:var(--fg);color:var(--bg);border-radius:16px;padding:1.4rem;margin:1.3rem 0 1rem;text-align:center}
-  .optin h3{font-size:1.4rem;margin-bottom:.3rem;color:var(--bg)}
-  .optin p{margin:0 0 1rem;color:var(--bg)}
-  .optin input{width:100%;max-width:340px;padding:.85rem 1rem;border:1.5px solid var(--line);border-radius:12px;font-size:1rem;background:var(--surface);color:var(--fg);margin-bottom:.7rem}
+  .optin{background:var(--fg);color:var(--coffee);border-radius:16px;padding:1.4rem;margin:1.3rem 0 1rem;text-align:center}
+  .optin h3{font-size:1.4rem;margin-bottom:.3rem;color:var(--coffee)}
+  .optin p{margin:0 0 1rem;color:var(--coffee)}
+  .optin input{width:100%;max-width:340px;padding:.85rem 1rem;border:1.5px solid rgba(110,74,44,.4);border-radius:12px;font-size:1rem;background:var(--coffee-field);color:var(--coffee);margin-bottom:.7rem}
+  .optin input::placeholder{color:rgba(110,74,44,.55)}
   .optin input:focus-visible{outline:3px solid var(--deep);outline-offset:1px}
   .err{color:#9A3E12;font-size:.85rem;font-weight:600;margin:.4rem 0 0!important}
-  .done{background:var(--fg);color:var(--bg);border-radius:16px;padding:1.5rem;margin:1.3rem 0 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.8rem}
-  .done h3{font-size:1.4rem;color:var(--bg)}
-  .done p{margin:0;color:var(--bg)}
+  .done{background:var(--fg);color:var(--coffee);border-radius:16px;padding:1.5rem;margin:1.3rem 0 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+  .done h3{font-size:1.4rem;color:var(--coffee)}
+  .done p{margin:0;color:var(--coffee)}
   .done .btn{width:100%;max-width:340px}
-  .done .note{font-size:.82rem;color:rgba(13,27,31,.6);margin-top:.3rem}
+  .done .note{font-size:.82rem;color:rgba(110,74,44,.65);margin-top:.3rem}
   .restart{display:block;margin:1rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
   .res-grid{display:block}
 </style>
