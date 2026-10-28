@@ -7,21 +7,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700&display=swap">
 <style>
   :root{
-    --bg:#FBF0E2; --surface:#FFFFFF; --surface-2:#FFEDDC;
-    --fg:#162628; --muted:#456066; --line:#E4D5C1;
-    --deep:#1F3B41; --accent:#CB713F; --accent-soft:#FBE1C9;
-    --below:#B4552B;
-    --shadow:0 1px 2px rgba(22,38,40,.06), 0 10px 30px rgba(22,38,40,.07);
+    --bg:#0D1B1F; --surface:#16292D; --surface-2:#1F3B41;
+    --fg:#F2E7D8; --muted:#B1CAD1; --line:#2B4349;
+    --deep:#7FB4BC; --accent:#D47E45; --accent-soft:#2C1D12;
+    --below:#E0905A;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.45);
     --font-display:"Libre Baskerville", Georgia, serif;
     --font-body:"Open Sans", -apple-system, system-ui, sans-serif;
-  }
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --bg:#0D1B1F; --surface:#162628; --surface-2:#1F3B41;
-    --fg:#F2E7D8; --muted:#B1CAD1; --line:#2B4349;
-    --deep:#7FB4BC; --accent:#D47E45; --accent-soft:#2C170D; --below:#E0905A;
-    --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.45);
     color-scheme:dark;
-  }}
+  }
   *{box-sizing:border-box}
   html,body{min-height:100%;margin:0}
   img{max-width:100%}
@@ -36,15 +30,16 @@
   .btn.ghost{background:transparent;color:var(--deep);border:1.5px solid var(--deep);box-shadow:none}
   .btn:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
 
+  .intro{text-align:center}
   .intro h1{font-size:clamp(2rem,7vw,3rem);line-height:1.04;margin-bottom:.6rem}
-  .intro p{color:var(--muted);font-size:1.08rem;margin:0 0 1.6rem;max-width:40ch}
+  .intro p{color:var(--muted);font-size:1.08rem;margin:0 auto 1.6rem;max-width:40ch}
   .intro .meta{font-size:.85rem;color:var(--muted);margin-top:1.1rem}
 
   .top{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
   .bar{flex:1;height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
   .bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s ease}
   .count{font-size:.8rem;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .q h2{font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.15;margin-bottom:1.3rem}
+  .q h2{font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.15;margin-bottom:1.3rem;text-align:center}
   .opts{display:flex;flex-direction:column;gap:.6rem}
   .opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:.95rem 1.1rem;font-size:1rem;color:var(--fg);cursor:pointer;transition:border-color .12s,transform .1s}
   .opt:hover{border-color:var(--deep);transform:translateY(-1px)}
@@ -52,11 +47,11 @@
   .back{margin-top:1.3rem;background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:0;cursor:pointer}
   .back:disabled{opacity:.35;cursor:default}
 
-  .res .eyebrow{color:var(--accent)}
-  .res h2{font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.05;margin-bottom:.3rem}
-  .res .tell{font-size:1.02rem;font-style:italic;color:var(--muted);margin:.2rem 0 1.1rem}
-  .fearlead{font-size:1.12rem;font-weight:600;margin:.2rem 0 .4rem}
-  .fearnote{color:var(--muted);margin:0 0 1.4rem}
+  .res .eyebrow{color:var(--accent);text-align:center}
+  .res h2{font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.05;margin-bottom:.3rem;text-align:center}
+  .res .tell{font-size:1.02rem;font-style:italic;color:var(--muted);margin:.2rem auto 1.1rem;text-align:center;max-width:46ch}
+  .fearlead{font-size:1.12rem;font-weight:600;margin:.2rem auto .4rem;text-align:center;max-width:48ch}
+  .fearnote{color:var(--muted);margin:0 auto 1.4rem;text-align:center;max-width:52ch}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.3rem;box-shadow:var(--shadow);margin-bottom:1.1rem}
   .card>h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--deep);margin-bottom:.5rem}
   .card>p{margin:0;color:var(--fg)}
