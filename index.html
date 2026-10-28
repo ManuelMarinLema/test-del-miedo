@@ -17,11 +17,11 @@
     color-scheme:dark;
   }
   *{box-sizing:border-box}
-  html,body{min-height:100%;margin:0}
+  html,body{margin:0}
   img{max-width:100%}
   [hidden]{display:none!important}
   body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:620px;margin:0 auto;padding:clamp(28px,6vw,64px) max(18px,env(safe-area-inset-left,0px));min-height:100%;display:flex;flex-direction:column;justify-content:center}
+  .wrap{max-width:960px;margin:0 auto;padding:clamp(28px,6vw,64px) max(18px,env(safe-area-inset-left,0px))}
   h1,h2,h3{font-family:var(--font-display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
   .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--deep);font-weight:700;margin:0 0 .8rem}
   button,input{font-family:inherit}
@@ -30,10 +30,11 @@
   .btn.ghost{background:transparent;color:var(--deep);border:1.5px solid var(--deep);box-shadow:none}
   .btn:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
 
-  .intro{text-align:center}
+  .intro{text-align:center;max-width:620px;margin-inline:auto}
   .intro h1{font-size:clamp(2rem,7vw,3rem);line-height:1.04;margin-bottom:.6rem}
   .intro p{color:var(--muted);font-size:1.08rem;margin:0 auto 1.6rem;max-width:40ch}
   .intro .meta{font-size:.85rem;color:var(--muted);margin-top:1.1rem}
+  #quiz{max-width:600px;margin-inline:auto;width:100%}
 
   .top{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
   .bar{flex:1;height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
@@ -85,7 +86,13 @@
   .done p{margin:0;color:var(--fg)}
   .done .btn{width:100%;max-width:340px}
   .done .note{font-size:.82rem;color:var(--muted);margin-top:.3rem}
-  .restart{display:block;margin:.6rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
+  .restart{display:block;margin:1rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
+  .res-grid{display:block}
+  @media (min-width:820px){
+    .res-grid{columns:2;column-gap:1.2rem}
+    .res-grid > *{break-inside:avoid}
+    .optin,.done{margin-top:0}
+  }
 </style>
 </head>
 <body>
@@ -118,6 +125,7 @@
     <p class="fearlead" id="rfear"></p>
     <p class="fearnote">Casi nadie sabe que vive desde el miedo, pero eso es justamente lo que nos detiene de la realidad que soñamos. La buena noticia es que el miedo no tiene que ser quien dirige nuestra vida, porque la valentía se entrena. Aprender a soltar el miedo nos devuelve la energía y el poder para lograr lo que tanto queremos. Nunca se trató de esforzarse más.</p>
 
+    <div class="res-grid">
     <div class="card">
       <h3>Cómo te drena la energía</h3>
       <p id="rdrain"></p>
@@ -164,6 +172,7 @@
       <a class="btn" id="waBtn" target="_blank" rel="noopener">Entrar al grupo de WhatsApp</a>
       <a class="btn ghost" id="calBtn" target="_blank" rel="noopener">Guardar en mi calendario</a>
       <p class="note">El link de la clase se comparte en el grupo de WhatsApp.</p>
+    </div>
     </div>
 
     <button class="restart" id="restart">Volver a empezar</button>
@@ -297,6 +306,14 @@
     $("optin").hidden=true; $("done").hidden=false;
     $("done").scrollIntoView({behavior:"smooth",block:"center"});
   });
+
+  // Auto-ajuste de altura cuando está embebido (evita scroll dentro de scroll)
+  function postHeight(){
+    try{ parent.postMessage({type:"testMiedoHeight", height: Math.ceil(document.documentElement.scrollHeight)}, "*"); }catch(e){}
+  }
+  if(window.ResizeObserver){ new ResizeObserver(postHeight).observe(document.body); }
+  window.addEventListener("load", function(){ postHeight(); setTimeout(postHeight,350); });
+  window.addEventListener("resize", postHeight);
 </script>
 </body>
 </html>
