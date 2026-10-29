@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>¿Qué miedo te frena?</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
     --bg:#0D1B1F; --surface:#16292D; --surface-2:#1F3B41;
@@ -101,7 +103,8 @@
   .done p{margin:0;color:var(--fg)}
   .done .btn{width:100%;max-width:340px}
   .done .note{font-size:.82rem;color:var(--muted);margin-top:.3rem}
-  .restart{display:block;margin:1rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
+  .pdfbtn{display:block;margin:2.4rem auto 0}
+  .restart{display:block;margin:1.2rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
   .res-grid{display:block}
 </style>
 </head>
@@ -183,7 +186,7 @@
       </ul>
     </div>
 
-    <h2 class="section-break">¿Cómo estar en el <span class="hl">evento gratis?</span></h2>
+    <h2 class="section-break" id="evtTitle">¿Cómo estar en el <span class="hl">evento gratis?</span></h2>
 
     <form id="optin" class="optin" novalidate>
       <h3>Asegura tu cupo ahora</h3>
@@ -201,6 +204,7 @@
     </div>
     </div>
 
+    <button class="btn pdfbtn" id="pdfBtn">Descargar mi resultado en PDF</button>
     <button class="restart" id="restart">Volver a empezar</button>
   </section>
 
@@ -364,6 +368,35 @@
     $("optin").hidden=true; $("done").hidden=false;
     $("done").scrollIntoView({behavior:"smooth",block:"center"});
   });
+
+  // Descargar resultado en PDF (un clic → archivo). Oculta la sección del evento y el correo.
+  async function downloadPDF(filename, hideSel, btn){
+    if(!(window.jspdf && window.html2canvas)){ alert("No se pudo cargar el generador de PDF. Revisa tu conexión e inténtalo de nuevo."); return; }
+    const el=document.querySelector(".wrap");
+    const hideEls=document.querySelectorAll(hideSel);
+    const prev=[];
+    const label=btn?btn.textContent:"";
+    if(btn){ btn.textContent="Generando PDF…"; btn.disabled=true; }
+    hideEls.forEach(x=>{ prev.push(x.style.display); x.style.display="none"; });
+    try{ if(document.fonts && document.fonts.ready){ await document.fonts.ready; } }catch(e){}
+    try{
+      const canvas=await html2canvas(el,{backgroundColor:"#0D1B1F",scale:2,useCORS:true});
+      const img=canvas.toDataURL("image/png");
+      const { jsPDF }=window.jspdf;
+      const pdf=new jsPDF("p","pt","a4");
+      const pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
+      const ih=canvas.height*(pw/canvas.width);
+      let heightLeft=ih, pos=0;
+      pdf.setFillColor(13,27,31); pdf.rect(0,0,pw,ph,"F");
+      pdf.addImage(img,"PNG",0,0,pw,ih,"","FAST");
+      heightLeft-=ph;
+      while(heightLeft>0){ pos-=ph; pdf.addPage(); pdf.setFillColor(13,27,31); pdf.rect(0,0,pw,ph,"F"); pdf.addImage(img,"PNG",0,pos,pw,ih,"","FAST"); heightLeft-=ph; }
+      pdf.save(filename);
+    }catch(e){ alert("Hubo un problema generando el PDF. Inténtalo de nuevo."); }
+    hideEls.forEach((x,ix)=>{ x.style.display=prev[ix]; });
+    if(btn){ btn.textContent=label; btn.disabled=false; }
+  }
+  $("pdfBtn").onclick=function(){ downloadPDF("mi-resultado-del-miedo.pdf", "#evtTitle,#optin,#done,.pdfbtn,.restart", this); };
 
   // Auto-ajuste de altura cuando está embebido (evita scroll dentro de scroll)
   function postHeight(){
