@@ -10,7 +10,7 @@
     --bg:#0D1B1F; --surface:#16292D; --surface-2:#1F3B41;
     --fg:#F2E7D8; --muted:#B1CAD1; --line:#2B4349;
     --deep:#7FB4BC; --accent:#D47E45; --accent-soft:#2C1D12;
-    --below:#E0905A; --coffee:#6E4A2C; --coffee-field:#EADBC6;
+    --below:#E0905A; --yellow:#EDAA56;
     --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.45);
     --font-display:"Libre Baskerville", Georgia, serif;
     --font-body:"Open Sans", -apple-system, system-ui, sans-serif;
@@ -20,43 +20,55 @@
   html,body{margin:0}
   img{max-width:100%}
   [hidden]{display:none!important}
-  body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:720px;margin:0 auto;padding:clamp(28px,6vw,64px) clamp(20px,5vw,40px)}
-  h1,h2,h3{font-family:var(--font-display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
+  body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:clamp(40px,8vw,88px) clamp(22px,5vw,44px)}
+  .divide{width:48px;height:2px;background:var(--line);border:0;border-radius:2px;margin:0 auto 2.4rem}
+  h1,h2,h3{font-family:var(--font-display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-.01em}
   .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--deep);font-weight:700;margin:0 0 .8rem}
   button,input{font-family:inherit}
-  .btn{display:inline-block;text-align:center;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:.9rem 1.6rem;font-size:1rem;font-weight:700;box-shadow:var(--shadow);cursor:pointer;text-decoration:none;transition:transform .12s ease}
+  .btn{display:inline-block;text-align:center;background:#9FCAD1;color:var(--bg);border:none;border-radius:999px;padding:.9rem 1.6rem;font-size:1rem;font-weight:700;box-shadow:var(--shadow);cursor:pointer;text-decoration:none;transition:transform .12s ease}
+  .hl{color:var(--yellow);font-style:italic}
   .btn:hover{transform:translateY(-1px)}
   .btn.ghost{background:transparent;color:var(--deep);border:1.5px solid var(--deep);box-shadow:none}
   .btn:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
 
   .intro{text-align:center}
-  .intro h1{font-size:clamp(2rem,7vw,3rem);line-height:1.04;margin-bottom:.6rem}
-  .intro p{color:var(--muted);font-size:1.08rem;margin:0 auto 1.6rem;max-width:60ch}
-  .intro .meta{font-size:.85rem;color:var(--muted);margin-top:1.1rem}
+  .intro h1{font-size:clamp(2rem,7vw,3rem);line-height:1.04;margin-bottom:1rem}
+  .intro p{color:var(--fg);font-size:1.08rem;margin:0 auto 2.2rem;max-width:60ch}
+  .intro .meta{font-size:.85rem;color:var(--muted);margin-top:1.6rem}
   #quiz{width:100%}
 
-  .top{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
+  .top{display:flex;align-items:center;gap:.8rem;margin-bottom:2.4rem}
   .bar{flex:1;height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
   .bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s ease}
   .count{font-size:.8rem;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .q h2{font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.15;margin-bottom:1.3rem;text-align:center}
-  .opts{display:flex;flex-direction:column;gap:.6rem}
+  .q h2{font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.2;margin-bottom:1.9rem;text-align:center}
+  .opts{display:flex;flex-direction:column;gap:.75rem}
   .opt{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:.95rem 1.1rem;font-size:1rem;color:var(--fg);cursor:pointer;transition:border-color .12s,transform .1s}
   .opt:hover{border-color:var(--deep);transform:translateY(-1px)}
   .opt:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
   .back{margin-top:1.3rem;background:none;border:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:0;cursor:pointer}
   .back:disabled{opacity:.35;cursor:default}
 
-  .res .eyebrow{color:var(--accent);text-align:center}
-  .res h2{font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.05;margin-bottom:.3rem;text-align:center}
-  .res .tell{font-size:1.02rem;font-style:italic;color:var(--muted);margin:.2rem auto 1.1rem;text-align:center;max-width:60ch}
-  .fearlead{font-size:1.12rem;font-weight:600;margin:.2rem auto .4rem;text-align:center;max-width:62ch}
-  .fearnote{color:var(--muted);margin:0 auto 1.4rem;text-align:center;max-width:64ch}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.3rem;box-shadow:var(--shadow);margin-bottom:1.1rem}
-  .card>h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--deep);margin-bottom:.5rem}
+  .res .eyebrow{color:var(--deep);text-align:center}
+  .res h2{font-size:clamp(2.6rem,9.5vw,4.2rem);line-height:1.02;margin-bottom:.1rem;text-align:center}
+  .res .tell{font-size:1.08rem;font-style:italic;color:var(--yellow);margin:2rem auto 2.2rem;text-align:center;max-width:56ch}
+  .fearlead{font-family:var(--font-display);font-weight:400;font-size:clamp(1.4rem,4.2vw,1.95rem);line-height:1.22;color:var(--fg);margin:.4rem auto .8rem;text-align:center;max-width:34ch}
+  .fearnote{color:var(--fg);margin:0 auto 1.7rem;text-align:center;max-width:64ch}
+  .card{background:var(--surface);border-radius:16px;padding:1.6rem 1.7rem;box-shadow:var(--shadow);margin-bottom:1.6rem}
+  .card>h3{font-size:1.2rem;font-weight:400;letter-spacing:normal;color:var(--deep);margin-bottom:.8rem}
   .card>p{margin:0;color:var(--fg)}
-  .undermap{margin:1.1rem 0 0!important;color:var(--muted);font-size:.93rem}
+  .res .pctbig{text-align:center;color:var(--yellow);font-family:var(--font-display);font-weight:400;font-size:clamp(2.8rem,10vw,4.2rem);line-height:1;margin:.1rem auto .25rem}
+  .secline{font-family:var(--font-display);font-size:1.3rem;margin:0 0 .6rem!important;color:var(--fg)}
+  .secline #secpct{color:var(--yellow)}
+  .secrest{margin-top:1.4rem}
+  .secrest-label{color:var(--muted);font-size:.92rem;margin:0 0 .55rem!important}
+  .secrest ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem}
+  .secrest li{color:var(--fg);font-size:1rem}
+  .secrest li span{color:var(--muted)}
+  .res .closer{font-family:var(--font-body);font-size:1.22rem;font-weight:600;color:var(--fg);text-align:center;line-height:1.45;margin:.6rem auto 3rem;max-width:40ch}
+  .fearnote strong,.intro strong{color:var(--fg)}
+  .undermap{margin:1.1rem 0 0!important;color:var(--fg);font-size:1rem}
   .mapwrap{display:flex;gap:1.1rem;align-items:stretch}
   .scale{position:relative;width:60px;flex:none;border-radius:12px;overflow:hidden;background:linear-gradient(to top,#CB713F 0%,#EDAA56 34%,#598993 62%,#B1CAD1 100%);min-height:250px}
   .line200{position:absolute;left:0;right:0;border-top:2px dashed rgba(255,255,255,.9)}
@@ -67,26 +79,28 @@
   .ml span{color:var(--muted)}
   .ml.you b{color:var(--below)}
   .ml.goal b{color:var(--deep)}
-  .classcard{border-color:var(--deep);border-width:1.5px}
-  .cl-title{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--fg);margin:.1rem 0 .5rem!important}
-  .classcard .lead{margin:0 0 .4rem!important;color:var(--fg)}
-  .cl-list{list-style:none;margin:.7rem 0 0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+  .section-break{font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);text-align:center;margin:4.5rem 0 0;padding-bottom:2.4rem}
+  .classblock{max-width:36rem;margin:0 auto;text-align:center}
+  .cl-title{font-family:var(--font-display);font-size:1.3rem;font-weight:400;color:var(--fg);margin:.1rem 0 .5rem!important}
+  .classblock .lead{margin:0 auto .4rem!important;color:var(--fg);max-width:40ch}
+  .cl-list{list-style:none;margin:1.4rem auto 0;padding:0;display:flex;flex-direction:column;gap:.9rem;text-align:left;max-width:34rem}
   .cl-list li{font-size:.95rem;color:var(--fg)}
   .cl-list li b{color:var(--deep)}
 
   /* opt-in */
-  .optin{background:var(--fg);color:var(--coffee);border-radius:16px;padding:1.4rem;margin:1.3rem 0 1rem;text-align:center}
-  .optin h3{font-size:1.4rem;margin-bottom:.3rem;color:var(--coffee)}
-  .optin p{margin:0 0 1rem;color:var(--coffee)}
-  .optin input{width:100%;max-width:340px;padding:.85rem 1rem;border:1.5px solid rgba(110,74,44,.4);border-radius:12px;font-size:1rem;background:var(--coffee-field);color:var(--coffee);margin-bottom:.7rem}
-  .optin input::placeholder{color:rgba(110,74,44,.55)}
+  .optin{background:var(--surface);color:var(--fg);border-radius:16px;padding:1.4rem;margin:1.3rem 0 1rem;text-align:center}
+  .optin h3{font-size:1.4rem;margin-bottom:.3rem;color:var(--fg)}
+  .optin p{margin:0 0 1rem;color:var(--fg)}
+  .optin input{width:100%;max-width:340px;padding:.85rem 1rem;border:1.5px solid var(--line);border-radius:12px;font-size:1rem;background:var(--surface-2);color:var(--fg);margin-bottom:.7rem}
+  .optin input::placeholder{color:var(--muted)}
+  .optin input.inputerr{border-color:var(--below)}
   .optin input:focus-visible{outline:3px solid var(--deep);outline-offset:1px}
-  .err{color:#9A3E12;font-size:.85rem;font-weight:600;margin:.4rem 0 0!important}
-  .done{background:var(--fg);color:var(--coffee);border-radius:16px;padding:1.5rem;margin:1.3rem 0 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.8rem}
-  .done h3{font-size:1.4rem;color:var(--coffee)}
-  .done p{margin:0;color:var(--coffee)}
+  .err{color:var(--below);font-size:.85rem;font-weight:600;margin:.4rem 0 0!important}
+  .done{background:var(--surface);color:var(--fg);border-radius:16px;padding:1.5rem;margin:1.3rem 0 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+  .done h3{font-size:1.4rem;color:var(--fg)}
+  .done p{margin:0;color:var(--fg)}
   .done .btn{width:100%;max-width:340px}
-  .done .note{font-size:.82rem;color:rgba(110,74,44,.65);margin-top:.3rem}
+  .done .note{font-size:.82rem;color:var(--muted);margin-top:.3rem}
   .restart{display:block;margin:1rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
   .res-grid{display:block}
 </style>
@@ -96,8 +110,8 @@
 
   <section id="intro" class="intro">
     <p class="eyebrow">Del miedo a la valentía · test</p>
-    <h1>¿Qué miedo te está frenando?</h1>
-    <p>La mayoría no cree que sea el miedo lo que los frena. Pensamos que es falta de tiempo, de disciplina, de claridad o de estrategia. En estas 6 preguntas te das cuenta cuál cara del miedo te está alejando de tus metas y qué hacer para soltarla.</p>
+    <h1>¿Qué miedo te está <span class="hl">frenando?</span></h1>
+    <p>La mayoría no cree que sea el miedo lo que los frena. Pensamos que es falta de tiempo, de disciplina, de claridad o de estrategia. En estas 7 preguntas te das cuenta <strong>cuál cara del miedo te está alejando de tus metas y qué hacer para soltarla.</strong></p>
     <button class="btn" id="start">Empezar</button>
     <p class="meta">Tarda 1 minuto. Sé honesto, nadie te está mirando.</p>
   </section>
@@ -117,9 +131,13 @@
   <section id="result" hidden class="res">
     <p class="eyebrow">Tu resultado</p>
     <h2 id="rname"></h2>
+    <p class="pctbig" id="rpct"></p>
     <p class="tell" id="rtell"></p>
     <p class="fearlead" id="rfear"></p>
-    <p class="fearnote">Casi nadie sabe que vive desde el miedo, pero eso es justamente lo que nos detiene de la realidad que soñamos. La buena noticia es que el miedo no tiene que ser quien dirige nuestra vida, porque la valentía se entrena. Aprender a soltar el miedo nos devuelve la energía y el poder para lograr lo que tanto queremos. Nunca se trató de esforzarse más.</p>
+    <p class="fearnote">La buena noticia es que el miedo no tiene que ser quien dirige nuestra vida, porque la valentía se entrena. <strong>Aprender a soltar el miedo nos devuelve la energía y el poder para lograr lo que tanto queremos.</strong></p>
+    <p class="closer">Nunca se trató de esforzarse más.</p>
+
+    <hr class="divide">
 
     <div class="res-grid">
     <div class="card">
@@ -140,14 +158,24 @@
           <div class="ml you"><b id="rfreqname"></b><span id="rfreqnote"></span></div>
         </div>
       </div>
-      <p class="undermap">Esta es tu frecuencia ahora. Desde aquí, por más que te esfuerces, no puedes avanzar si no superas los miedos más profundos: trabajar duro tiene un límite porque el miedo te mantiene estancado. Lo que necesitas para salir de ese bucle es transformar tu energía y hacerle frente al miedo.</p>
-      <p class="undermap" style="font-size:.78rem;opacity:.62;margin-top:.7rem!important">Nos apoyamos en el mapa de consciencia de David Hawkins: un marco para ubicarte y ver el salto que sigue, no una medición exacta.</p>
+      <p class="undermap">Esta es tu frecuencia ahora. Desde aquí, por más que te esfuerces, no puedes avanzar si no superas los miedos más profundos: trabajar duro tiene un límite porque el miedo te mantiene estancado. <strong>Lo que necesitas para salir de ese bucle es transformar tu energía y hacerle frente al miedo.</strong></p>
+      <p class="undermap" style="font-size:.78rem;opacity:.62;margin-top:.7rem!important">Nos apoyamos en el mapa de consciencia de David Hawkins: un marco para ubicarte y ver el salto que sigue.</p>
     </div>
 
-    <div class="card classcard">
-      <h3>Lo que sigue</h3>
+    <div class="card seccard" id="seccard" hidden>
+      <h3>Tus miedos secundarios</h3>
+      <p class="secline"><span id="secname2"></span> · <span id="secpct"></span></p>
+      <p id="secpara"></p>
+      <div class="secrest" id="secrest" hidden>
+        <p class="secrest-label">También aparecen en ti:</p>
+        <ul id="secrestlist"></ul>
+      </div>
+    </div>
+
+    <div class="classblock">
+      <h2 class="section-break">¿Cuál es el <span class="hl">siguiente paso?</span></h2>
       <p class="cl-title">Del miedo a la valentía</p>
-      <p class="lead">3 días en vivo y gratis (1, 2 y 3 de diciembre) para entender y soltar esos miedos profundos, subir tu frecuencia y llegar hasta la frecuencia de la valentía — donde empieza a fluir la vida.</p>
+      <p class="lead">3 días en vivo y gratis (1, 2 y 3 de diciembre) para entender y soltar esos miedos profundos, subir tu frecuencia y llegar hasta la frecuencia de la valentía — <strong>donde empieza a fluir la vida.</strong></p>
       <ul class="cl-list">
         <li><b>Por qué es para ti:</b> tu energía hoy está debajo de 200. Hasta que no cruces este umbral, no importa cuánto te esfuerces: la vida va a seguir igual. Aquí aprendes a subirla.</li>
         <li><b>Qué te llevas:</b> ver tu miedo de frente, soltarlo en vivo, y una herramienta para volver a tu energía cuando el miedo empiece a aparecer o a frenarte.</li>
@@ -155,12 +183,13 @@
       </ul>
     </div>
 
-    <form id="optin" class="optin">
-      <h3>Guarda tu lugar</h3>
-      <p>Déjame tu correo y asegura tu cupo. Es gratis.</p>
+    <h2 class="section-break">¿Cómo estar en el <span class="hl">evento gratis?</span></h2>
+
+    <form id="optin" class="optin" novalidate>
+      <h3>Asegura tu cupo ahora</h3>
       <input type="email" id="email" required autocomplete="email" placeholder="tu@correo.com">
       <button class="btn" type="submit">¡Quiero estar!</button>
-      <p class="err" id="err" hidden>Escribe tu mejor correo.</p>
+      <p class="err" id="err" role="alert" aria-live="assertive" hidden>Escribe tu mejor correo.</p>
     </form>
 
     <div id="done" class="done" hidden>
@@ -187,11 +216,11 @@
   /* ================================================== */
 
   const TYPES = {
-    exigente: { name:"El Exigente", tell:"“Nunca está suficientemente bien. Lo lograste… pero pudiste hacerlo mejor.”", fear:"Debajo de esa exigencia hay un miedo más profundo: no ser suficiente.", drain:"Te mides sólo por el resultado, y cada logro sube la vara. La meta se aleja justo cuando la tocas. Es agotador y nunca te alcanza.", freq:175, freqName:"Orgullo · 175", freqNote:"un poder frágil que depende de que todo salga perfecto" },
-    afanado: { name:"El Afanado", tell:"“Ya, ya, rápido. La próxima meta sí me va a llenar.”", fear:"Debajo del afán hay un miedo a quedarte quieto y sentirte vacío.", drain:"Vives en la prisa: la mente no para, el cuerpo tampoco. Logras cosas pero nunca llegas, porque el afán siempre te pide que hagas más y estés ocupado.", freq:125, freqName:"Deseo · 125", freqNote:"correr sin llegar, siempre detrás de lo que sigue" },
-    paralizado: { name:"El Paralizado", tell:"“Cuando esté listo. Lo tengo que pensar más.” Y el lunes… sigues igual.", fear:"Debajo de tu preparación realmente hay un miedo a fallar. Te imaginas el peor escenario y por eso nunca das el primer paso.", drain:"Esperas tener certeza para arrancar, y la certeza no llega. Mientras tanto, la vida que quieres se sigue posponiendo.", freq:100, freqName:"Miedo · 100", freqNote:"la raíz: la certeza que esperas nunca llega sola" },
-    complaciente: { name:"El Camaleón", tell:"“¿Qué van a pensar? Tengo que mantener mi imagen.” Y haces lo que se espera de ti.", fear:"Debajo de complacer hay un miedo al rechazo que te aleja de ser tu versión más auténtica.", drain:"Tu energía se va en no decepcionar a nadie, y tu verdad queda de última. Terminas con una vida que se ve bien por fuera pero vacía por dentro.", freq:30, freqName:"Culpa · 30", freqNote:"cuidar tu imagen te aleja de tu verdad" },
-    controlador: { name:"El Controlador", tell:"“Si no lo hago yo, sale mal.” Te cuesta demasiado soltar, no confías.", fear:"Debajo del control hay un miedo a fracasar y que crean que no eres valioso.", drain:"Cargas todo porque soltar te da pánico. Cada día estás más cansado, más estresado y te vuelves el cuello de botella de tu propia vida, siempre preocupado de lo que va a salir mal.", freq:150, freqName:"Control · 150", freqNote:"cargarlo todo te tensa y te frena" }
+    exigente: { name:"El Exigente", tell:"“Nunca está suficientemente bien. Lo lograste… pero pudiste hacerlo mejor.”", fear:"Debajo de esa exigencia hay un miedo más profundo: <em>no ser suficiente.</em>", drain:"Te mides sólo por el resultado, y cada logro sube la vara. La meta se aleja justo cuando la tocas. Es agotador y nunca te alcanza.", freq:175, freqName:"Orgullo · 175", freqNote:"un poder frágil que depende de que todo salga perfecto" },
+    afanado: { name:"El Afanado", tell:"“Ya, ya, rápido. La próxima meta sí me va a llenar.”", fear:"Debajo del afán hay un miedo a <em>quedarte quieto y sentirte vacío.</em>", drain:"Vives en la prisa: la mente no para, el cuerpo tampoco. Logras cosas pero nunca llegas, porque el afán siempre te pide que hagas más y estés ocupado.", freq:125, freqName:"Deseo · 125", freqNote:"correr sin llegar, siempre detrás de lo que sigue" },
+    paralizado: { name:"El Paralizado", tell:"“Cuando esté listo. Lo tengo que pensar más.” Y el lunes… sigues igual.", fear:"Debajo de tu preparación realmente hay un miedo <em>a fallar.</em> Te imaginas el peor escenario y por eso nunca das el primer paso.", drain:"Esperas tener certeza para arrancar, y la certeza no llega. Mientras tanto, la vida que quieres se sigue posponiendo.", freq:100, freqName:"Miedo · 100", freqNote:"la raíz: la certeza que esperas nunca llega sola" },
+    complaciente: { name:"El Camaleón", tell:"“¿Qué van a pensar? Tengo que mantener mi imagen.” Y haces lo que se espera de ti.", fear:"Debajo de complacer hay un miedo <em>al rechazo</em> que te aleja de ser tu versión más auténtica.", drain:"Tu energía se va en no decepcionar a nadie, y tu verdad queda de última. Terminas con una vida que se ve bien por fuera pero vacía por dentro.", freq:30, freqName:"Culpa · 30", freqNote:"cuidar tu imagen te aleja de tu verdad" },
+    controlador: { name:"El Controlador", tell:"“Si no lo hago yo, sale mal.” Te cuesta demasiado soltar, no confías.", fear:"Debajo del control hay un miedo <em>a fracasar y que crean que no eres valioso.</em>", drain:"Cargas todo porque soltar te da pánico. Cada día estás más cansado, más estresado y te vuelves el cuello de botella de tu propia vida, siempre preocupado de lo que va a salir mal.", freq:150, freqName:"Control · 150", freqNote:"cargarlo todo te tensa y te frena" }
   };
 
   const QUESTIONS = [
@@ -230,7 +259,13 @@
       ["Imposible, no soy capaz de parar la mente","afanado"],
       ["Bien… aunque me da miedo quedarme ahí de más","paralizado"],
       ["Culposo si hay alguien a quien podría estar ayudando","complaciente"],
-      ["Incómodo, siento que algo se me va de las manos","controlador"] ]}
+      ["Incómodo, siento que algo se me va de las manos","controlador"] ]},
+    { q:"Si fueras del todo honesto contigo, lo que más te asusta es…", w:2, a:[
+      ["Esforzarme al máximo y que aun así no sea suficiente","exigente"],
+      ["Parar y sentir que sigo sintiéndome vacío","afanado"],
+      ["Arriesgarme, fallar y confirmar que no era capaz","paralizado"],
+      ["Que me rechacen o no sea suficiente por ser mi versión más real","complaciente"],
+      ["Soltar el control y que todo se me derrumbe","controlador"] ]}
   ];
 
   const $ = id => document.getElementById(id);
@@ -257,14 +292,37 @@
 
   function showResult(){
     $("fill").style.width="100%";
-    const tally={}; answers.forEach(t=>tally[t]=(tally[t]||0)+1);
-    let win=answers[0]; for(const t in tally){ if(tally[t]>(tally[win]||0)) win=t; }
+    const W=QUESTIONS.map(q=>q.w||1);
+    let total=0; const tally={};
+    answers.forEach((t,idx)=>{ const w=W[idx]||1; tally[t]=(tally[t]||0)+w; total+=w; });
+    if(!total) total=1;
+    const order=Object.keys(TYPES).filter(t=>tally[t]).sort((a,b)=>tally[b]-tally[a]);
+    const win=order[0]||answers[0];
     currentType = win;
     const r=TYPES[win];
+    const primPct=Math.round((tally[win]/total)*100);
+    $("rpct").textContent=primPct+"%";
+    const sec=order[1];
+    if(sec){
+      const secPct=Math.round((tally[sec]/total)*100);
+      $("secname2").textContent=TYPES[sec].name;
+      $("secpct").textContent=secPct+"%";
+      $("secpara").innerHTML=TYPES[sec].fear+" "+TYPES[sec].drain;
+      const rest=order.slice(2);
+      if(rest.length){
+        $("secrestlist").innerHTML=rest.map(function(t){
+          return "<li>"+TYPES[t].name+" <span>· "+Math.round((tally[t]/total)*100)+"%</span></li>";
+        }).join("");
+        $("secrest").hidden=false;
+      } else { $("secrest").hidden=true; }
+      $("seccard").hidden=false;
+    } else {
+      $("seccard").hidden=true;
+    }
     $("quiz").hidden=true; $("result").hidden=false;
     $("rname").textContent=r.name;
     $("rtell").textContent=r.tell;
-    $("rfear").textContent=r.fear;
+    $("rfear").innerHTML=r.fear;
     $("rdrain").textContent=r.drain;
     $("rfreqname").textContent=r.freqName;
     $("rfreqnote").textContent=r.freqNote;
@@ -292,11 +350,14 @@
     }catch(e){}
   }
 
+  function showErr(msg){ $("err").textContent=msg; $("err").hidden=false; $("email").classList.add("inputerr"); $("email").focus(); try{postHeight();}catch(e){} }
+  $("email").addEventListener("input", function(){ $("err").hidden=true; $("email").classList.remove("inputerr"); });
   $("optin").addEventListener("submit", e => {
     e.preventDefault();
     const email = $("email").value.trim();
-    if(!validEmail(email)){ $("err").hidden=false; return; }
-    $("err").hidden=true;
+    if(!email){ showErr("Por favor introduce tu correo."); return; }
+    if(!validEmail(email)){ showErr("Asegúrate de que sea un correo válido."); return; }
+    $("err").hidden=true; $("email").classList.remove("inputerr");
     sendToWebhook({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", origen:"test-del-miedo-a-la-valentia" });
     $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
     $("calBtn").href = CONFIG.CALENDAR_URL || "#";
