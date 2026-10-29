@@ -105,6 +105,7 @@
   .done .note{font-size:.82rem;color:var(--muted);margin-top:.3rem}
   .pdfbtn{display:block;margin:2.4rem auto 0}
   .restart{display:block;margin:1.2rem auto 0;background:none;border:none;color:var(--muted);font-weight:600;font-size:.9rem;cursor:pointer}
+  .morelink{display:block;margin:.7rem auto 0;color:var(--deep);font-weight:700;font-size:.95rem;text-decoration:none;text-align:center}
   .res-grid{display:block}
 </style>
 </head>
@@ -206,6 +207,7 @@
 
     <button class="btn pdfbtn" id="pdfBtn">Descargar mi resultado en PDF</button>
     <button class="restart" id="restart">Volver a empezar</button>
+    <a class="morelink" id="moreBtn" target="_top" rel="noopener">Quiero saber más →</a>
   </section>
 
 </div>
@@ -215,7 +217,8 @@
   const CONFIG = {
     WEBHOOK_URL: "https://hook.us2.make.com/exucx3n9ioyk1nmvdgz8dy31ssl3oxin",  // Make webhook
     WHATSAPP_URL: "https://chat.whatsapp.com/F3axjbSggOM6Ya1mIXFhVU",  // grupo "Del miedo a la valentía"
-    CALENDAR_URL: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Del%20miedo%20a%20la%20valent%C3%ADa&dates=20261201T190000/20261201T203000&ctz=America/Bogota&recur=RRULE%3AFREQ%3DDAILY%3BCOUNT%3D3&details=Mini%20curso%20en%20vivo%207%3A00-8%3A30pm%20los%203%20d%C3%ADas%20(1%2C%202%20y%203%20de%20diciembre).%20El%20link%20de%20cada%20sesi%C3%B3n%20llega%20al%20grupo%20de%20WhatsApp.&location=https%3A%2F%2Fmeet.google.com%2Frva-wxth-yim"
+    CALENDAR_URL: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Del%20miedo%20a%20la%20valent%C3%ADa&dates=20261201T190000/20261201T203000&ctz=America/Bogota&recur=RRULE%3AFREQ%3DDAILY%3BCOUNT%3D3&details=Mini%20curso%20en%20vivo%207%3A00-8%3A30pm%20los%203%20d%C3%ADas%20(1%2C%202%20y%203%20de%20diciembre).%20El%20link%20de%20cada%20sesi%C3%B3n%20llega%20al%20grupo%20de%20WhatsApp.&location=https%3A%2F%2Fmeet.google.com%2Frva-wxth-yim",
+    ENTRENAMIENTO_URL: "https://www.manuelmarin.co/amar-adentro"  // página del entrenamiento (volver)
   };
   /* ================================================== */
 
@@ -278,6 +281,7 @@
   $("start").onclick = () => { $("intro").hidden = true; $("quiz").hidden = false; render(); };
   $("back").onclick = () => { if (i>0){ i--; answers.pop(); render(); } };
   $("restart").onclick = () => { i=0; answers=[]; $("result").hidden=true; $("intro").hidden=false; $("optin").hidden=false; $("done").hidden=true; };
+  $("moreBtn").href = CONFIG.ENTRENAMIENTO_URL || "#";
 
   function render(){
     const Q = QUESTIONS[i];
@@ -383,14 +387,11 @@
       const canvas=await html2canvas(el,{backgroundColor:"#0D1B1F",scale:2,useCORS:true});
       const img=canvas.toDataURL("image/png");
       const { jsPDF }=window.jspdf;
-      const pdf=new jsPDF("p","pt","a4");
-      const pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
+      const pw=595.28; // ancho A4 en pt
       const ih=canvas.height*(pw/canvas.width);
-      let heightLeft=ih, pos=0;
-      pdf.setFillColor(13,27,31); pdf.rect(0,0,pw,ph,"F");
+      const pdf=new jsPDF({orientation:"p",unit:"pt",format:[pw,ih]}); // una sola página del alto exacto → nada se corta
+      pdf.setFillColor(13,27,31); pdf.rect(0,0,pw,ih,"F");
       pdf.addImage(img,"PNG",0,0,pw,ih,"","FAST");
-      heightLeft-=ph;
-      while(heightLeft>0){ pos-=ph; pdf.addPage(); pdf.setFillColor(13,27,31); pdf.rect(0,0,pw,ph,"F"); pdf.addImage(img,"PNG",0,pos,pw,ih,"","FAST"); heightLeft-=ph; }
       pdf.save(filename);
     }catch(e){ alert("Hubo un problema generando el PDF. Inténtalo de nuevo."); }
     hideEls.forEach((x,ix)=>{ x.style.display=prev[ix]; });
