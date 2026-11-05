@@ -82,9 +82,9 @@
   .ml.you b{color:var(--below)}
   .ml.goal b{color:var(--deep)}
   .section-break{font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);text-align:center;margin:4.5rem 0 0;padding-bottom:2.4rem}
-  .classblock{max-width:36rem;margin:0 auto;text-align:center}
-  .cl-title{font-family:var(--font-display);font-size:1.3rem;font-weight:400;color:var(--fg);margin:.1rem 0 .5rem!important}
-  .classblock .lead{margin:0 auto .4rem!important;color:var(--fg);max-width:40ch}
+  .classblock{max-width:40rem;margin:0 auto;text-align:center}
+  .cl-title{font-family:var(--font-display);font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);margin:2.4rem 0 .8rem!important}
+  .classblock .lead{margin:0 auto .4rem!important;color:var(--fg);max-width:54ch}
   .cl-list{list-style:none;margin:1.4rem auto 0;padding:0;display:flex;flex-direction:column;gap:.9rem;text-align:left;max-width:34rem}
   .cl-list li{font-size:.95rem;color:var(--fg)}
   .cl-list li b{color:var(--deep)}
@@ -138,8 +138,6 @@
     <p class="pctbig" id="rpct"></p>
     <p class="tell" id="rtell"></p>
     <p class="fearlead" id="rfear"></p>
-    <p class="fearnote">La buena noticia es que el miedo no tiene que ser quien dirige nuestra vida, porque la valentía se entrena. <strong>Aprender a soltar el miedo nos devuelve la energía y el poder para lograr lo que tanto queremos.</strong></p>
-    <p class="closer">Nunca se trató de esforzarse más.</p>
 
     <hr class="divide">
 
@@ -162,7 +160,7 @@
           <div class="ml you"><b id="rfreqname"></b><span id="rfreqnote"></span></div>
         </div>
       </div>
-      <p class="undermap">Esta es tu frecuencia ahora. Desde aquí, por más que te esfuerces, no puedes avanzar si no superas los miedos más profundos: trabajar duro tiene un límite porque el miedo te mantiene estancado. <strong>Lo que necesitas para salir de ese bucle es transformar tu energía y hacerle frente al miedo.</strong></p>
+      <p class="undermap">Esta es tu frecuencia hoy. Desde aquí, por más que te esfuerces, los resultados no llegan hasta que no superas esos miedos más profundos.</p>
       <p class="undermap" style="font-size:.78rem;opacity:.62;margin-top:.7rem!important">Nos apoyamos en el mapa de consciencia de David Hawkins: un marco para ubicarte y ver el salto que sigue.</p>
     </div>
 
@@ -178,8 +176,10 @@
 
     <div class="classblock">
       <h2 class="section-break">¿Cuál es el <span class="hl">siguiente paso?</span></h2>
-      <p class="cl-title">Del miedo a la valentía</p>
-      <p class="lead">3 días en vivo y gratis (1, 2 y 3 de diciembre) para <strong>soltar esos miedos profundos que te estancan y te agotan</strong> y subir tu energía hasta la valentía — donde todo empieza a crecer.</p>
+      <p class="fearnote">La buena noticia es que el miedo no tiene que ser quien dirige nuestra vida, porque la valentía se entrena. <strong>Aprender a soltar el miedo nos devuelve la energía, la confianza y la capacidad de tomar acción para lograr lo que tanto queremos.</strong></p>
+      <p class="lead">Por eso creé un evento en vivo y gratis para acompañarte a dar justo ese paso:</p>
+      <p class="cl-title">Del miedo <span class="hl">a la valentía</span></p>
+      <p class="lead">Un evento en vivo de 3 días (1, 2 y 3 de diciembre) para <strong>conectar con la versión de ti que puede lograrlo</strong>, soltando los miedos y conectando con la frecuencia de la valentía, la confianza y la acción.</p>
       <ul class="cl-list">
         <li><b>Por qué es para ti:</b> tu energía hoy está debajo de 200. Hasta que no cruces este umbral, no importa cuánto te esfuerces: la vida va a seguir igual. Aquí aprendes a subirla.</li>
         <li><b>Qué te llevas:</b> ver tu miedo de frente, soltarlo en vivo, y una herramienta para volver a tu energía cuando el miedo empiece a aparecer o a frenarte.</li>
@@ -198,16 +198,14 @@
 
     <div id="done" class="done" hidden>
       <h3>¡Listo! Nos vemos del 1 al 3 de diciembre 🌞</h3>
-      <p>Dos pasos para no perdértelo:</p>
+      <p>Entra al grupo para no perdértelo:</p>
       <a class="btn" id="waBtn" target="_blank" rel="noopener">Entrar al grupo de WhatsApp</a>
-      <a class="btn ghost" id="calBtn" target="_blank" rel="noopener">Guardar en mi calendario</a>
       <p class="note">El link de la clase se comparte en el grupo de WhatsApp.</p>
     </div>
     </div>
 
     <button class="btn pdfbtn" id="pdfBtn">Descargar mi resultado en PDF</button>
     <button class="restart" id="restart">Volver a empezar</button>
-    <a class="morelink" id="moreBtn" target="_top" rel="noopener">Quiero saber más →</a>
   </section>
 
 </div>
@@ -281,7 +279,6 @@
   $("start").onclick = () => { $("intro").hidden = true; $("quiz").hidden = false; render(); };
   $("back").onclick = () => { if (i>0){ i--; answers.pop(); render(); } };
   $("restart").onclick = () => { i=0; answers=[]; $("result").hidden=true; $("intro").hidden=false; $("optin").hidden=false; $("done").hidden=true; };
-  $("moreBtn").href = CONFIG.ENTRENAMIENTO_URL || "#";
 
   function render(){
     const Q = QUESTIONS[i];
@@ -368,7 +365,6 @@
     $("err").hidden=true; $("email").classList.remove("inputerr");
     sendToWebhook({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", origen:"test-del-miedo-a-la-valentia" });
     $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
-    $("calBtn").href = CONFIG.CALENDAR_URL || "#";
     $("optin").hidden=true; $("done").hidden=false;
     $("done").scrollIntoView({behavior:"smooth",block:"center"});
   });
