@@ -81,6 +81,9 @@
   .ml span{color:var(--muted)}
   .ml.you b{color:var(--below)}
   .ml.goal b{color:var(--deep)}
+  .ml.ref b{color:var(--muted)}
+  .res .tierline{color:var(--fg);text-align:center;font-size:1.05rem;max-width:52ch;margin:.2rem auto 1rem}
+  .res .pazline{color:var(--deep);text-align:center;font-weight:600;font-size:.98rem;max-width:52ch;margin:.2rem auto .4rem}
   .section-break{font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);text-align:center;margin:4.5rem 0 0;padding-bottom:2.4rem}
   .classblock{max-width:40rem;margin:0 auto;text-align:center}
   .cl-title{font-family:var(--font-display);font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);margin:4.8rem 0 .8rem!important}
@@ -139,8 +142,10 @@
 
   <section id="result" hidden class="res">
     <p class="eyebrow">Tu resultado</p>
+    <p class="tierline" id="rtier" hidden></p>
     <h2 id="rname"></h2>
     <p class="pctbig" id="rpct"></p>
+    <p class="pazline" id="rpaz" hidden></p>
     <p class="tell" id="rtell"></p>
     <p class="fearlead" id="rfear"></p>
 
@@ -148,7 +153,7 @@
 
     <div class="res-grid">
     <div class="card">
-      <h3>Cómo te drena la energía</h3>
+      <h3 id="rdraintitle">Cómo te drena la energía</h3>
       <p id="rdrain"></p>
     </div>
 
@@ -161,11 +166,11 @@
         </div>
         <div class="maplabels">
           <div class="ml goal"><b>Amor · 500</b><span>Crear desde la plenitud</span></div>
-          <div class="ml goal"><b>Valentía · 200</b><span>El salto: dar el paso con el miedo al lado</span></div>
-          <div class="ml you"><b id="rfreqname"></b><span id="rfreqnote"></span></div>
+          <div class="ml goal" id="midlabel"><b id="midname">Valentía · 200</b><span id="midnote">El salto: dar el paso con el miedo al lado</span></div>
+          <div class="ml you" id="botlabel"><b id="rfreqname"></b><span id="rfreqnote"></span></div>
         </div>
       </div>
-      <p class="undermap">Esta es tu frecuencia hoy. Desde aquí, por más que te esfuerces, los resultados no llegan hasta que no superas esos miedos más profundos.</p>
+      <p class="undermap" id="rundermap">Esta es tu frecuencia hoy. Desde aquí, por más que te esfuerces, los resultados no llegan hasta que no superas esos miedos más profundos.</p>
       <p class="undermap" style="font-size:.78rem;opacity:.62;margin-top:.7rem!important">Nos apoyamos en el mapa de consciencia de David Hawkins: un marco para ubicarte y ver el salto que sigue.</p>
     </div>
 
@@ -230,37 +235,43 @@
       ["Quiero lanzarla YA, antes de perder el impulso","afanado"],
       ["No sé por dónde empezar, normalmente lo dejo para después","paralizado"],
       ["Pienso en el impacto que tendría en mi imagen o reputación","complaciente"],
-      ["Planeo cómo revisar cada detalle para que no falle","controlador"] ]},
+      ["Planeo cómo revisar cada detalle para que no falle","controlador"],
+      ["La empiezo con lo que tengo y la ajusto en el camino","paz"] ]},
     { q:"Es domingo en la noche. ¿Qué sientes?", a:[
       ["Que pude haber hecho más, que no rindió como debía","exigente"],
       ["Ansiedad por todo lo que voy a hacer esta semana","afanado"],
       ["Que otra semana se fue y no arranqué lo que quería","paralizado"],
       ["Que puedo hacerlo mejor para que reconozcan mi trabajo","complaciente"],
-      ["Repasando todo lo que tiene que estar bajo control","controlador"] ]},
+      ["Repasando todo lo que tiene que estar bajo control","controlador"],
+      ["Tranquilo, con ganas de lo que trae la semana","paz"] ]},
     { q:"Alguien te felicita por un logro. ¿Qué te dice tu voz interna?", a:[
       ["“Sí, pero pude hacerlo mejor”","exigente"],
       ["“Gracias… aunque todavía queda mucho por hacer”","afanado"],
       ["“Ojalá supieran lo que me costó decidirme”","paralizado"],
       ["“¡Por fin se dan cuenta!”","complaciente"],
-      ["“Salió bien porque siempre estuve pendiente”","controlador"] ]},
+      ["“Salió bien porque siempre estuve pendiente”","controlador"],
+      ["“Gracias.” Y me lo disfruto sin buscarle el pero","paz"] ]},
     { q:"Lo que más te frena de dar un paso grande es…", a:[
       ["Que no quede perfecto","exigente"],
       ["Sacarle el tiempo que necesita, vivo corriendo","afanado"],
       ["La sigo posponiendo sin querer","paralizado"],
       ["Que dañe mi imagen o decepcionar a alguien","complaciente"],
-      ["No saber si va a salir como quiero","controlador"] ]},
+      ["No saber si va a salir como quiero","controlador"],
+      ["Casi nada. Me da miedo, pero lo doy igual","paz"] ]},
     { q:"Cuando algo sale mal, por dentro te dices…", a:[
       ["“Debí saber que iba a pasar, fue mi culpa”","exigente"],
       ["“Otro retraso y tanto por hacer, no tengo tiempo para esto”","afanado"],
       ["“Por eso mejor no me arriesgo”","paralizado"],
       ["“¿Qué van a pensar de mí?”","complaciente"],
-      ["“Si lo hubiera hecho yo, no pasa”","controlador"] ]},
+      ["“Si lo hubiera hecho yo, no pasa”","controlador"],
+      ["“¿Qué aprendo de esto?” Me dolió, pero sigo","paz"] ]},
     { q:"Parar para descansar o no hacer nada se siente…", a:[
       ["Como que estoy fallando o perdiendo el tiempo","exigente"],
       ["Imposible, no soy capaz de parar la mente","afanado"],
       ["Bien… aunque me da miedo quedarme ahí de más","paralizado"],
       ["Culposo si hay alguien a quien podría estar ayudando","complaciente"],
-      ["Incómodo, siento que algo se me va de las manos","controlador"] ]},
+      ["Incómodo, siento que algo se me va de las manos","controlador"],
+      ["Necesario. Descanso sin culpa y vuelvo con más energía","paz"] ]},
     { q:"Si fueras del todo honesto contigo, lo que más te asusta es…", w:2, a:[
       ["Esforzarme al máximo y que aun así no sea suficiente","exigente"],
       ["Parar y sentir que sigo sintiéndome vacío","afanado"],
@@ -270,7 +281,10 @@
   ];
 
   const $ = id => document.getElementById(id);
-  let i = 0, answers = [], currentType = null, userEmail = "";
+  let i = 0, answers = [], currentType = null, userEmail = "", OPTS = [];
+  // Orden barajado de respuestas: la respuesta en paz no queda siempre en el mismo lugar
+  function shuffle(a){ for(let k=a.length-1;k>0;k--){ const j=Math.floor(Math.random()*(k+1)); [a[k],a[j]]=[a[j],a[k]]; } return a; }
+  function newOrder(){ OPTS = QUESTIONS.map(q=>shuffle(q.a.slice())); }
 
   // Correo al inicio: nadie empieza el test sin dejarlo
   function gateErr(msg){ $("gateErr").textContent=msg; $("gateErr").hidden=false; $("gateEmail").classList.add("inputerr"); $("gateEmail").focus(); try{postHeight();}catch(e){} }
@@ -282,12 +296,12 @@
     if(!validEmail(email)){ gateErr("Asegúrate de que sea un correo válido."); return; }
     userEmail = email;
     sendToWebhook({ email:email, etapa:"inicio", origen:"test-del-miedo-a-la-valentia" });
-    $("intro").hidden = true; $("quiz").hidden = false; render(); window.scrollTo(0,0);
+    newOrder(); $("intro").hidden = true; $("quiz").hidden = false; render(); window.scrollTo(0,0);
   });
   $("back").onclick = () => { if (i>0){ i--; answers.pop(); render(); } };
   $("restart").onclick = () => {
     i=0; answers=[]; $("result").hidden=true;
-    if(userEmail){ $("quiz").hidden=false; render(); window.scrollTo(0,0); } else { $("intro").hidden=false; }
+    if(userEmail){ newOrder(); $("quiz").hidden=false; render(); window.scrollTo(0,0); } else { $("intro").hidden=false; }
   };
 
   function render(){
@@ -297,7 +311,7 @@
     $("qtext").textContent = Q.q;
     $("back").disabled = i===0;
     const box = $("opts"); box.innerHTML = "";
-    Q.a.forEach(([text,type]) => {
+    (OPTS[i] || Q.a).forEach(([text,type]) => {
       const b = document.createElement("button");
       b.className="opt"; b.type="button"; b.textContent=text;
       b.onclick = () => { answers[i]=type; i++; (i<QUESTIONS.length)?render():showResult(); };
@@ -343,11 +357,45 @@
     $("rtell").textContent=r.tell;
     $("rfear").innerHTML=r.fear;
     $("rdrain").textContent=r.drain;
+    // Niveles según cuántas respuestas salieron desde la paz (preguntas 1-6)
+    const pazN = answers.filter(t=>t==="paz").length;
+    const pazW = answers.reduce((s,t,idx)=>s+(t==="paz"?(W[idx]||1):0),0);
+    const tier = pazN>=5 ? 3 : (pazN>=3 ? 2 : 1);
+    if(pazN>0){ $("rpaz").textContent="Y un "+Math.round(pazW/total*100)+"% de tus respuestas ya salen desde la valentía."; $("rpaz").hidden=false; }
+    else { $("rpaz").hidden=true; }
+    const TIER_TXT = {
+      2: "Ya diste varios pasos con el miedo al lado. Pero cuando algo de verdad te importa, todavía se asoma este:",
+      3: "Vives buena parte de tu vida desde la valentía. Aun así, este es el miedo que más se te asoma cuando algo te importa:"
+    };
+    if(tier>1){ $("rtier").textContent=TIER_TXT[tier]; $("rtier").hidden=false; } else { $("rtier").hidden=true; }
+    const UNDER = {
+      1: "Esta es tu frecuencia hoy. Desde aquí, por más que te esfuerces, los resultados no llegan hasta que no superas esos miedos más profundos.",
+      2: "Esta es tu frecuencia hoy: justo en el umbral. Ya das pasos con el miedo al lado; el reto ahora es sostenerlo cuando algo de verdad te importa.",
+      3: "Esta es tu frecuencia hoy: por encima del umbral. El miedo todavía aparece, pero ya no decide por ti. El siguiente paso es soltar lo que aún se asoma y crear desde ahí."
+    };
+    $("rundermap").textContent=UNDER[tier];
+    const DRAIN_SOFT = {
+      exigente: "Cuando algo te importa de verdad, vuelve la vara alta: lo revisas una vez más, le encuentras el pero y el logro te dura poco. Te frena menos que antes, pero justo en lo que más quieres te quita el disfrute.",
+      afanado: "Cuando hay mucho en juego, la mente se acelera y vuelves a correr. Haces más pero disfrutas menos, y parar se siente como perder el tiempo.",
+      paralizado: "Cuando el paso es grande, aparece la duda y lo dejas para cuando esté más claro. Te pasa sobre todo con lo que más quieres, y por eso es lo que más cuesta.",
+      complaciente: "Cuando una decisión puede incomodar a alguien, te guardas un poco de ti. Cedes en lo pequeño para no decepcionar, y lo que de verdad quieres queda en pausa.",
+      controlador: "Cuando algo importa, vuelves a querer tenerlo todo bajo control. Te cuesta delegar y soltar, y esa carga extra te quita más energía de la que crees."
+    };
+    if(tier>1){ $("rdraintitle").textContent="Cómo te drena cuando aparece"; $("rdrain").textContent=DRAIN_SOFT[win]||r.drain; }
+    else { $("rdraintitle").textContent="Cómo te drena la energía"; $("rdrain").textContent=r.drain; }
     $("rfreqname").textContent=r.freqName;
-    $("rfreqnote").textContent=r.freqNote;
+    if(tier===1){
+      $("midlabel").className="ml goal"; $("midname").textContent="Valentía · 200"; $("midnote").textContent="El salto: dar el paso con el miedo al lado";
+      $("botlabel").className="ml you"; $("rfreqnote").textContent=r.freqNote;
+    } else {
+      $("midlabel").className="ml you";
+      $("midname").textContent = tier===2 ? "Valentía · 200" : "Valentía · 200+";
+      $("midnote").textContent = tier===2 ? "Aquí estás: ya das el paso con el miedo al lado" : "Aquí estás: el miedo aparece, pero ya no decide por ti";
+      $("botlabel").className="ml ref"; $("rfreqnote").textContent="A donde te jala tu miedo cuando algo te importa";
+    }
     const pct=v=>Math.max(4,Math.min(96,v/540*100));
     $("l200").style.bottom=pct(200)+"%";
-    $("mkyou").style.bottom=pct(r.freq)+"%";
+    $("mkyou").style.bottom=pct(tier===3 ? 300 : (tier===2 ? 200 : r.freq))+"%";
     window.scrollTo(0,0);
   }
 
