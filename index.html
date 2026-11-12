@@ -83,7 +83,7 @@
   .ml.goal b{color:var(--deep)}
   .section-break{font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);text-align:center;margin:4.5rem 0 0;padding-bottom:2.4rem}
   .classblock{max-width:40rem;margin:0 auto;text-align:center}
-  .cl-title{font-family:var(--font-display);font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);margin:2.4rem 0 .8rem!important}
+  .cl-title{font-family:var(--font-display);font-size:clamp(2.6rem,9.5vw,4.2rem);font-weight:400;line-height:1.12;color:var(--fg);margin:4.8rem 0 .8rem!important}
   .classblock .lead{margin:0 auto .4rem!important;color:var(--fg);max-width:54ch}
   .cl-list{list-style:none;margin:1.4rem auto 0;padding:0;display:flex;flex-direction:column;gap:.9rem;text-align:left;max-width:34rem}
   .cl-list li{font-size:.95rem;color:var(--fg)}
@@ -116,7 +116,12 @@
     <p class="eyebrow">Del miedo a la valentía · test</p>
     <h1>¿Qué miedo te está <span class="hl">frenando?</span></h1>
     <p>La mayoría no cree que sea el miedo lo que los frena. Pensamos que es falta de tiempo, de disciplina, de claridad o de estrategia. En estas 7 preguntas te das cuenta <strong>cuál cara del miedo te está alejando de tus metas y qué hacer para soltarla.</strong></p>
-    <button class="btn" id="start">Empezar</button>
+    <form id="gate" class="optin" novalidate>
+      <p>Escribe tu correo para empezar.</p>
+      <input type="email" id="gateEmail" required autocomplete="email" placeholder="tu@correo.com">
+      <button class="btn" type="submit">Empezar el test</button>
+      <p class="err" id="gateErr" role="alert" aria-live="assertive" hidden>Escribe tu mejor correo.</p>
+    </form>
     <p class="meta">Tarda 1 minuto. Sé honesto, nadie te está mirando.</p>
   </section>
 
@@ -179,7 +184,7 @@
       <p class="fearnote">La buena noticia es que el miedo no tiene que ser quien dirige nuestra vida, porque la valentía se entrena. <strong>Aprender a soltar el miedo nos devuelve la energía, la confianza y la capacidad de tomar acción para lograr lo que tanto queremos.</strong></p>
       <p class="lead">Por eso creé un evento en vivo y gratis para acompañarte a dar justo ese paso:</p>
       <p class="cl-title">Del miedo <span class="hl">a la valentía</span></p>
-      <p class="lead">Un evento en vivo de 3 días (1, 2 y 3 de diciembre) para <strong>conectar con la versión de ti que puede lograrlo</strong>, soltando los miedos y conectando con la frecuencia de la valentía, la confianza y la acción.</p>
+      <p class="lead">Un evento gratuito y en vivo de 3 días (1, 2 y 3 de diciembre) para <strong>conectar con la versión de ti que puede lograrlo</strong>, soltando los miedos y conectando con la frecuencia de la valentía, la confianza y la acción.</p>
       <ul class="cl-list">
         <li><b>Por qué es para ti:</b> tu energía hoy está debajo de 200. Hasta que no cruces este umbral, no importa cuánto te esfuerces: la vida va a seguir igual. Aquí aprendes a subirla.</li>
         <li><b>Qué te llevas:</b> ver tu miedo de frente, soltarlo en vivo, y una herramienta para volver a tu energía cuando el miedo empiece a aparecer o a frenarte.</li>
@@ -274,11 +279,25 @@
   ];
 
   const $ = id => document.getElementById(id);
-  let i = 0, answers = [], currentType = null;
+  let i = 0, answers = [], currentType = null, userEmail = "";
 
-  $("start").onclick = () => { $("intro").hidden = true; $("quiz").hidden = false; render(); };
+  // Correo al inicio: nadie empieza el test sin dejarlo
+  function gateErr(msg){ $("gateErr").textContent=msg; $("gateErr").hidden=false; $("gateEmail").classList.add("inputerr"); $("gateEmail").focus(); try{postHeight();}catch(e){} }
+  $("gateEmail").addEventListener("input", function(){ $("gateErr").hidden=true; $("gateEmail").classList.remove("inputerr"); });
+  $("gate").addEventListener("submit", e => {
+    e.preventDefault();
+    const email = $("gateEmail").value.trim();
+    if(!email){ gateErr("Por favor introduce tu correo."); return; }
+    if(!validEmail(email)){ gateErr("Asegúrate de que sea un correo válido."); return; }
+    userEmail = email;
+    sendToWebhook({ email:email, etapa:"inicio", origen:"test-del-miedo-a-la-valentia" });
+    $("intro").hidden = true; $("quiz").hidden = false; render(); window.scrollTo(0,0);
+  });
   $("back").onclick = () => { if (i>0){ i--; answers.pop(); render(); } };
-  $("restart").onclick = () => { i=0; answers=[]; $("result").hidden=true; $("intro").hidden=false; $("optin").hidden=false; $("done").hidden=true; };
+  $("restart").onclick = () => {
+    i=0; answers=[]; $("result").hidden=true; $("optin").hidden=false; $("done").hidden=true;
+    if(userEmail){ $("quiz").hidden=false; render(); window.scrollTo(0,0); } else { $("intro").hidden=false; }
+  };
 
   function render(){
     const Q = QUESTIONS[i];
@@ -305,6 +324,11 @@
     const win=order[0]||answers[0];
     currentType = win;
     const r=TYPES[win];
+    // Ya tenemos el correo: no se vuelve a pedir, y el perfil queda guardado aunque no aparte cupo
+    if(userEmail){
+      $("email").value = userEmail; $("email").hidden = true;
+      sendToWebhook({ email:userEmail, miedo:win, perfil:r.name, etapa:"resultado", origen:"test-del-miedo-a-la-valentia" });
+    }
     const primPct=Math.round((tally[win]/total)*100);
     $("rpct").textContent=primPct+"%";
     const sec=order[1];
@@ -363,7 +387,7 @@
     if(!email){ showErr("Por favor introduce tu correo."); return; }
     if(!validEmail(email)){ showErr("Asegúrate de que sea un correo válido."); return; }
     $("err").hidden=true; $("email").classList.remove("inputerr");
-    sendToWebhook({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", origen:"test-del-miedo-a-la-valentia" });
+    sendToWebhook({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", etapa:"evento", origen:"test-del-miedo-a-la-valentia" });
     $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
     $("optin").hidden=true; $("done").hidden=false;
     $("done").scrollIntoView({behavior:"smooth",block:"center"});
