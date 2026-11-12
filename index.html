@@ -186,7 +186,7 @@
       <p class="cl-title">Del miedo <span class="hl">a la valentía</span></p>
       <p class="lead">Un evento gratuito y en vivo de 3 días (1, 2 y 3 de diciembre) para <strong>conectar con la versión de ti que puede lograrlo</strong>, soltando los miedos y conectando con la frecuencia de la valentía, la confianza y la acción.</p>
       <ul class="cl-list">
-        <li><b>Por qué es para ti:</b> tu energía hoy está debajo de 200. Hasta que no cruces este umbral, no importa cuánto te esfuerces: la vida va a seguir igual. Aquí aprendes a subirla.</li>
+        <li><b>Por qué es para ti:</b> porque ya trabajaste la estrategia, te esforzaste y le dedicaste el tiempo, pero los resultados no llegan hasta que sueltas los miedos que no te dejan crecer. Autoexigencia, afán, complacencia, procrastinación o control. ¿Te suena? En estos 3 días aprendes a soltarlos y a dar el paso con el miedo al lado.</li>
         <li><b>Qué te llevas:</b> ver tu miedo de frente, soltarlo en vivo, y una herramienta para volver a tu energía cuando el miedo empiece a aparecer o a frenarte.</li>
         <li><b>Cómo funciona:</b> Día 1 mirarte · Día 2 sentir y soltar · Día 3 transformar.</li>
       </ul>
@@ -194,18 +194,9 @@
 
     <h2 class="section-break" id="evtTitle">¿Cómo estar en el <span class="hl">evento gratis?</span></h2>
 
-    <form id="optin" class="optin" novalidate>
-      <h3>Asegura tu cupo ahora</h3>
-      <input type="email" id="email" required autocomplete="email" placeholder="tu@correo.com">
-      <button class="btn" type="submit">¡Quiero estar!</button>
-      <p class="err" id="err" role="alert" aria-live="assertive" hidden>Escribe tu mejor correo.</p>
-    </form>
-
-    <div id="done" class="done" hidden>
-      <h3>¡Listo! Nos vemos del 1 al 3 de diciembre 🌞</h3>
-      <p>Entra al grupo para no perdértelo:</p>
+    <div id="optin" class="optin">
+      <p>Accede ahora al grupo privado donde enviaremos el link de acceso al evento. Haz clic en el botón para entrar 👇</p>
       <a class="btn" id="waBtn" target="_blank" rel="noopener">Entrar al grupo de WhatsApp</a>
-      <p class="note">El link de la clase se comparte en el grupo de WhatsApp.</p>
     </div>
     </div>
 
@@ -295,7 +286,7 @@
   });
   $("back").onclick = () => { if (i>0){ i--; answers.pop(); render(); } };
   $("restart").onclick = () => {
-    i=0; answers=[]; $("result").hidden=true; $("optin").hidden=false; $("done").hidden=true;
+    i=0; answers=[]; $("result").hidden=true;
     if(userEmail){ $("quiz").hidden=false; render(); window.scrollTo(0,0); } else { $("intro").hidden=false; }
   };
 
@@ -326,7 +317,6 @@
     const r=TYPES[win];
     // Ya tenemos el correo: no se vuelve a pedir, y el perfil queda guardado aunque no aparte cupo
     if(userEmail){
-      $("email").value = userEmail; $("email").hidden = true;
       sendToWebhook({ email:userEmail, miedo:win, perfil:r.name, etapa:"resultado", origen:"test-del-miedo-a-la-valentia" });
     }
     const primPct=Math.round((tally[win]/total)*100);
@@ -379,18 +369,14 @@
     }catch(e){}
   }
 
-  function showErr(msg){ $("err").textContent=msg; $("err").hidden=false; $("email").classList.add("inputerr"); $("email").focus(); try{postHeight();}catch(e){} }
-  $("email").addEventListener("input", function(){ $("err").hidden=true; $("email").classList.remove("inputerr"); });
-  $("optin").addEventListener("submit", e => {
-    e.preventDefault();
-    const email = $("email").value.trim();
-    if(!email){ showErr("Por favor introduce tu correo."); return; }
-    if(!validEmail(email)){ showErr("Asegúrate de que sea un correo válido."); return; }
-    $("err").hidden=true; $("email").classList.remove("inputerr");
-    sendToWebhook({ email:email, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", etapa:"evento", origen:"test-del-miedo-a-la-valentia" });
-    $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
-    $("optin").hidden=true; $("done").hidden=false;
-    $("done").scrollIntoView({behavior:"smooth",block:"center"});
+  // Un solo botón: entrar al grupo de WhatsApp = apartar el cupo
+  $("waBtn").href = CONFIG.WHATSAPP_URL || "#";
+  let eventoSent = false;
+  $("waBtn").addEventListener("click", function(){
+    if(userEmail && !eventoSent){
+      eventoSent = true;
+      sendToWebhook({ email:userEmail, miedo:currentType, perfil:(TYPES[currentType]||{}).name||"", etapa:"evento", origen:"test-del-miedo-a-la-valentia" });
+    }
   });
 
   // Descargar resultado en PDF (un clic → archivo). Oculta la sección del evento y el correo.
